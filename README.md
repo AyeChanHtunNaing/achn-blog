@@ -33,7 +33,11 @@ NEON_DATABASE_URL=postgres://...
 ADMIN_EMAIL=you@example.com
 ADMIN_PASSWORD=your-password
 SESSION_SECRET=long-random-string
+VITE_API_BASE_URL=
 ```
+
+- Local dev: keep `VITE_API_BASE_URL` empty (uses Vite proxy to local API).
+- Production (Netlify): set `VITE_API_BASE_URL` to your deployed API base URL (example: `https://api.yourdomain.com`).
 
 Create the database schema in Neon using:
 

@@ -1,3 +1,5 @@
+import { toApiUrl } from "@/lib/api-url";
+
 type SessionUser = {
   email: string;
 };
@@ -55,7 +57,7 @@ async function fetchSession(): Promise<Session | null> {
   const timeout = setTimeout(() => controller.abort(), 1500);
   let res: Response;
   try {
-    res = await fetch("/api/auth/session", {
+    res = await fetch(toApiUrl("/api/auth/session"), {
       headers: { Authorization: `Bearer ${token}` },
       signal: controller.signal,
     });
@@ -84,7 +86,7 @@ function emit(event: AuthChangeEvent, session: Session | null) {
 export const auth = {
   async signInWithPassword({ email, password }: { email: string; password: string }) {
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(toApiUrl("/api/auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -107,7 +109,7 @@ export const auth = {
   async signOut() {
     const token = getToken();
     if (token) {
-      await fetch("/api/auth/logout", {
+      await fetch(toApiUrl("/api/auth/logout"), {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       }).catch(() => {});
