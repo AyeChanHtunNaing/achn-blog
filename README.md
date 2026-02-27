@@ -34,10 +34,13 @@ ADMIN_EMAIL=you@example.com
 ADMIN_PASSWORD=your-password
 SESSION_SECRET=long-random-string
 VITE_API_BASE_URL=
+ALLOWED_ORIGINS=http://localhost:8080
 ```
 
 - Local dev: keep `VITE_API_BASE_URL` empty (uses Vite proxy to local API).
 - Production (Netlify): set `VITE_API_BASE_URL` to your deployed API base URL (example: `https://api.yourdomain.com`).
+- Set `ALLOWED_ORIGINS` on the API service to your frontend origin(s), comma-separated.
+  Example: `https://your-site.netlify.app,http://localhost:8080`
 
 Create the database schema in Neon using:
 

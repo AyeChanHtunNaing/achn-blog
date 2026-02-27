@@ -10,6 +10,10 @@ const DB_URL = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL;
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const SESSION_SECRET = process.env.SESSION_SECRET || "change-me";
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((v) => v.trim())
+  .filter(Boolean);
 
 if (!DB_URL) {
   console.warn("[api] Missing DATABASE_URL / NEON_DATABASE_URL");
@@ -22,7 +26,7 @@ if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
 const sql = DB_URL ? neon(DB_URL) : null;
 
 createServer(async (req, res) => {
-  setCors(res);
+  setCors(req, res);
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     res.end();
@@ -164,10 +168,22 @@ function ensureDb() {
   if (!sql) throw new Error("DATABASE_URL / NEON_DATABASE_URL is not configured");
 }
 
-function setCors(res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+function setCors(req, res) {
+  const origin = req.headers.origin;
+  let allowOrigin = "*";
+  if (ALLOWED_ORIGINS.length > 0) {
+    if (origin && ALLOWED_ORIGINS.includes(origin)) {
+      allowOrigin = origin;
+    } else {
+      allowOrigin = ALLOWED_ORIGINS[0];
+    }
+  }
+
+  res.setHeader("Access-Control-Allow-Origin", allowOrigin);
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Max-Age", "86400");
+  res.setHeader("Vary", "Origin");
 }
 
 function json(res, status, payload) {
