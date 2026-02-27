@@ -6,6 +6,10 @@ Personal blog app with:
 - Neon Postgres database
 - Admin login via API env credentials
 
+## Live URL
+
+- https://blog.peacechan.dev
+
 ## Architecture
 
 - Frontend calls `/api/*`.
