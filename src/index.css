@@ -158,6 +158,81 @@
     @apply border border-white/75 bg-white/70 backdrop-blur-md;
   }
 
+  .rich-editor-content {
+    @apply text-[15px] leading-8 text-slate-800;
+  }
+
+  .rich-editor-content > :first-child,
+  .rich-content > :first-child {
+    margin-top: 0;
+  }
+
+  .rich-editor-content > :last-child,
+  .rich-content > :last-child {
+    margin-bottom: 0;
+  }
+
+  .rich-editor-content p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    @apply float-left h-0 text-slate-400;
+  }
+
+  .rich-editor-content h1,
+  .rich-content h1 {
+    @apply mt-8 text-3xl font-extrabold tracking-tight text-slate-900;
+  }
+
+  .rich-editor-content h2,
+  .rich-content h2 {
+    @apply mt-7 text-2xl font-bold tracking-tight text-slate-900;
+  }
+
+  .rich-editor-content p,
+  .rich-content p,
+  .rich-editor-content ul,
+  .rich-content ul,
+  .rich-editor-content ol,
+  .rich-content ol,
+  .rich-editor-content blockquote,
+  .rich-content blockquote {
+    @apply my-4;
+  }
+
+  .rich-editor-content ul,
+  .rich-content ul {
+    @apply list-disc pl-6;
+  }
+
+  .rich-editor-content ol,
+  .rich-content ol {
+    @apply list-decimal pl-6;
+  }
+
+  .rich-editor-content a,
+  .rich-content a {
+    @apply font-medium text-primary underline decoration-primary/40 underline-offset-4;
+  }
+
+  .rich-editor-content blockquote,
+  .rich-content blockquote {
+    @apply border-l-4 border-blue-200 pl-4 italic text-slate-600;
+  }
+
+  .rich-editor-content code,
+  .rich-content code {
+    @apply rounded bg-slate-900 px-1.5 py-0.5 font-mono-ui text-[0.9em] text-slate-100;
+  }
+
+  .rich-editor-content pre,
+  .rich-content pre {
+    @apply overflow-x-auto rounded-xl bg-slate-900 p-4 text-slate-100;
+  }
+
+  .rich-editor-content pre code,
+  .rich-content pre code {
+    @apply bg-transparent p-0;
+  }
+
   .glass-sheen::after {
     content: "";
     position: absolute;

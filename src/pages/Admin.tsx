@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
+import RichTextEditor from "@/components/RichTextEditor";
 import { Plus, Pencil, Trash2, LogOut, ArrowLeft, Loader2 } from "lucide-react";
 
 type EditorState = {
@@ -287,12 +288,10 @@ function PostEditor({ post, onBack }: { post?: Post; onBack: () => void }) {
           </div>
           <div>
             <Label className="text-sm font-medium text-foreground">Content</Label>
-            <Textarea
+            <RichTextEditor
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={setContent}
               placeholder="Write your post..."
-              rows={16}
-              className="glass-input mt-1 leading-relaxed"
             />
           </div>
         </div>

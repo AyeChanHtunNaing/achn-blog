@@ -5,6 +5,8 @@ import BlogHeader from "@/components/BlogHeader";
 import BlogFooter from "@/components/BlogFooter";
 import { format } from "date-fns";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import DOMPurify from "dompurify";
+import { normalizeRichTextContent } from "@/lib/rich-text";
 
 export default function PostDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -13,6 +15,10 @@ export default function PostDetail() {
     queryFn: () => getPost(slug!),
     enabled: !!slug,
   });
+
+  const sanitizedContent = post
+    ? DOMPurify.sanitize(normalizeRichTextContent(post.content))
+    : "";
 
   return (
     <div className="min-h-screen bg-background">
@@ -57,9 +63,10 @@ export default function PostDetail() {
                 loading="lazy"
               />
             )}
-            <div className="mt-10 whitespace-pre-wrap text-[15px] md:text-base leading-8 text-slate-800">
-              {post.content}
-            </div>
+            <div
+              className="rich-content mt-10 text-[15px] md:text-base leading-8 text-slate-800"
+              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+            />
           </article>
         )}
       </main>
